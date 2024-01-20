@@ -10,7 +10,8 @@ vendor.xiaomi.hardware.displayfeature::IDisplayFeature       u:object_r:vendor_h
 vendor.dolby.hardware.dms::IDms                              u:object_r:hal_dms_hwservice:s0
 
 # Fingerprint
-vendor.xiaomi.hardware.fx.tunnel::IMiFxTunnel                u:object_r:vendor_hal_fingerprint_hwservice_xiaomi:s0
+vendor.xiaomi.hardware.fingerprintextension::IXiaomiFingerprint u:object_r:hal_xiaomi_fingerprint_hwservice:s0
+vendor.xiaomi.hardware.fx.tunnel::IMiFxTunnel                u:object_r:hal_xiaomi_fingerprint_hwservice:s0
 com.fingerprints.extension::IFingerprintNavigation           u:object_r:vendor_hal_fingerprint_hwservice_xiaomi:s0
 com.fingerprints.extension::IFingerprintSensorTest           u:object_r:vendor_hal_fingerprint_hwservice_xiaomi:s0
 
@@ -21,10 +22,10 @@ vendor.xiaomi.hardware.mlipay::IMlipayService                u:object_r:hal_mlip
 vendor.xiaomi.hardware.mtdservice::IMTService                u:object_r:hal_mtdservice_hwservice:s0
 vendor.xiaomi.hardware.tidaservice::ITidaService             u:object_r:hal_tidaservice_hwservice:s0
 
-# Touch Feature
-vendor.xiaomi.hw.touchfeature::ITouchFeature                 u:object_r:hal_touchfeature_xiaomi_hwservice:s0
-
 # Sensors
 android.frameworks.sensorservice::ISensorManager             u:object_r:fwk_sensor_hwservice:s0
 vendor.xiaomi.sensor.citsensorservice::ICitSensorService     u:object_r:vendor_hal_citsensorservice_xiaomi_hwservice:s0
 vendor.xiaomi.sensor.communicate::ISensorCommunicate         u:object_r:vendor_hal_sensorcommunicate_hwservice:s0
+
+# Touchfeature
+vendor.xiaomi.hw.touchfeature::ITouchFeature                 u:object_r:hal_touchfeature_xiaomi_hwservice:s0

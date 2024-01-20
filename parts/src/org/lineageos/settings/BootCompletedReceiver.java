@@ -23,8 +23,11 @@ import org.lineageos.settings.display.ColorService;
 import org.lineageos.settings.doze.AodBrightnessService;
 import org.lineageos.settings.doze.DozeUtils;
 import org.lineageos.settings.doze.PocketService;
+import org.lineageos.settings.gestures.GestureUtils;
 import org.lineageos.settings.refreshrate.RefreshUtils;
 import org.lineageos.settings.thermal.ThermalUtils;
+import org.lineageos.settings.touch.HighTouchPollingService;
+import org.lineageos.settings.touch.TouchOrientationService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
@@ -33,41 +36,50 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (DEBUG) Log.d(TAG, "Received boot completed intent");
+        Log.i(TAG, "Received intent: " + intent.getAction());
 
-        // Thermal Profiles
-        ThermalUtils.startService(context);
+        switch (intent.getAction()) {
+            case Intent.ACTION_LOCKED_BOOT_COMPLETED:
+                onLockedBootCompleted(context);
+                break;
+            case Intent.ACTION_BOOT_COMPLETED:
+                onBootCompleted(context);
+                break;
+        }
+    }
 
-        Log.i(TAG, "Boot completed");
-
-        // Doze
-        DozeUtils.checkDozeService(context);
-
-        // Pocket
-        PocketService.startService(context);
-
-        // DisplayFeature
+    private static void onLockedBootCompleted(Context context) {
+        // Services that don't require reading from data.
         ColorService.startService(context);
-
-        // NFC
-        NfcCameraService.startService(context);
-
-        // AOD
         AodBrightnessService.startService(context);
+        PocketService.startService(context);
+        NfcCameraService.startService(context);
+        HighTouchPollingService.startService(context);
+        TouchOrientationService.startService(context);
+        overrideHdrTypes(context);
+    }
 
-        // Dirac
+    private static void onBootCompleted(Context context) {
+        // Data is now accessible (user has just unlocked).
         try {
             DiracUtils.getInstance(context);
         } catch (Exception e) {
             Log.d(TAG, "Dirac is not present in system");
         }
-
-        // Per app refresh rate
+        DozeUtils.checkDozeService(context);
         RefreshUtils.initialize(context);
+        ThermalUtils.startService(context);
 
-        // Override HDR types
-        final DisplayManager displayManager = context.getSystemService(DisplayManager.class);
-        displayManager.overrideHdrTypes(Display.DEFAULT_DISPLAY, new int[]{
+        // Gesture: Double tap FPS
+        if (GestureUtils.isFpDoubleTapEnabled(context)) {
+            GestureUtils.setFingerprintNavigation(true);
+        }
+    }
+
+    private static void overrideHdrTypes(Context context) {
+        // Override HDR types to enable Dolby Vision
+        final DisplayManager dm = context.getSystemService(DisplayManager.class);
+        dm.overrideHdrTypes(Display.DEFAULT_DISPLAY, new int[]{
                 HdrCapabilities.HDR_TYPE_DOLBY_VISION, HdrCapabilities.HDR_TYPE_HDR10,
                 HdrCapabilities.HDR_TYPE_HLG, HdrCapabilities.HDR_TYPE_HDR10_PLUS});
     }

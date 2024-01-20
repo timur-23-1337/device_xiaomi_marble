@@ -35,15 +35,8 @@ ddr_type=`od -An -tx /proc/device-tree/memory/ddr_device_type`
 ddr_type4="07"
 ddr_type5="08"
 
-# Core control parameters for silver
-echo 1 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
-echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
-echo 30 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
-echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms
-echo 3 > /sys/devices/system/cpu/cpu0/core_ctl/task_thres
-    
 # Core control parameters for gold
-echo 1 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
+echo 0 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
 echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres
 echo 30 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres
 echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms

@@ -4,7 +4,6 @@ aaudio.mmap_exclusive_policy=2
 aaudio.hw_burst_min_usec=2000
 af.fast_track_multiplier=1
 ro.audio.flinger_standbytime_ms=2000
-vendor.audio_hal.period_size=192
 vendor.audio.ull_record_period_multiplier=2
 persist.vendor.audio.ambisonic.capture=false
 persist.vendor.audio.ambisonic.auto.profile=false
@@ -38,7 +37,6 @@ vendor.audio.use.sw.mpegh.decoder=true
 vendor.audio.hw.aac.encoder=false
 ro.af.client_heap_size_kbyte=7168
 vendor.audio_hal.in_period_size=144
-vendor.audio_hal.period_multiplier=3
 vendor.audio.adm.buffering.ms=2
 vendor.audio.volume.headset.gain.depcal=true
 vendor.audio.c2.preferred=true
@@ -155,6 +153,21 @@ vendor.audio.feature.audiozoom.enable=false
 vendor.audio.feature.snd_mon.enable=true
 vendor.audio.feature.dmabuf.cma.memory.enable=true
 
+# Audio (Misc)
+audio.safemedia.bypass=true
+vendor.audio.usb.period=2500
+vendor.audio.usb.out.period_us=2500
+vendor.audio.usb.out.period_count=2
+vendor.audio_hal.period_size=120
+vendor.audio_hal.period_multiplier=1
+vendor.audio.adm.buffering.ms=2
+persist.bluetooth.sbc_hd_higher_bitrate=1
+af.resampler.quality=7
+ro.audio.resampler.psd.enable_at_samplerate=44100
+ro.audio.resampler.psd.stopband=179
+ro.audio.resampler.psd.halflength=408
+ro.audio.resampler.psd.tbwcheat=99
+
 # Bluetooth
 bluetooth.hardware.power.idle_cur_ma=6
 bluetooth.hardware.power.operating_voltage_mv=3700
@@ -197,8 +210,7 @@ dalvik.vm.dex2oat64.enabled=true
 
 # Display
 debug.cpurend.vsync=false
-ro.hwui.render_ahead=30
-ro.vendor.perf.scroll_opt=true
+ro.hwui.render_ahead=60
 debug.hwui.skia_atrace_enabled=false
 debug.sf.enable_transaction_tracing=false
 vendor.display.disable_hw_recovery_dump=1
@@ -284,13 +296,12 @@ debug.sdm.support_writeback=0
 debug.sf.latch_unsignaled=1
 debug.sf.auto_latch_unsignaled=0
 debug.sf.defer_refresh_rate_when_off=1
-debug.sf.disable_client_composition_cache=0
+debug.sf.disable_client_composition_cache=1
 debug.sf.disable_backpressure=1
 debug.sf.enable_gl_backpressure=1
 debug.sf.enable_advanced_sf_phase_offset=1
 debug.sf.predict_hwc_composition_strategy=0
 debug.sf.treat_170m_as_sRGB=1
-ro.gfx.driver.1=com.qualcomm.qti.gpudrivers.taro.api32
 graphics.gpu.profiler.support=true
 ro.hardware.vulkan=adreno
 ro.hardware.egl=adreno
@@ -350,6 +361,7 @@ debug.stagefright.c2inputsurface=-1
 ro.mediaserver.64b.enable=true
 debug.stagefright.ccodec=4
 persist.mm.enable.prefetch=true
+vendor.media.omx=0
 vendor.mm.enable.qcom_parser=16777215
 
 # Misc

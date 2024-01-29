@@ -8,7 +8,6 @@ ro.vendor.aware_available                             u:object_r:vendor_aware_av
 
 # Camera
 vendor.camera.                                        u:object_r:vendor_camera_prop:s0
-persist.camera.                                       u:object_r:vendor_camera_prop:s0
 ro.boot.camera.                                       u:object_r:vendor_camera_prop:s0
 
 # DDR
@@ -107,9 +106,6 @@ vendor.display.hwc_backlight.support                  u:object_r:vendor_displayf
 vendor.displayfeature.entry.enable                    u:object_r:vendor_displayfeature_prop:s0
 vendor.hbm.enable                                     u:object_r:vendor_displayfeature_prop:s0
 vendor.video.mode.status                              u:object_r:vendor_displayfeature_prop:s0
-
-# Dolby
-vendor.dolbyv.                                        u:object_r:vendor_dolbyv_prop:s0
 
 # Fingerprint
 persist.vendor.sys.fp.                                u:object_r:vendor_fp_prop:s0

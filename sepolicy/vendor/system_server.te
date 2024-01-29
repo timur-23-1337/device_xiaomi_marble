@@ -1,5 +1,6 @@
 allow system_server vendor_hal_displayfeature_xiaomi_default:binder { call transfer };
 allow system_server vendor_hal_citsensorservice_xiaomi_default:binder { call transfer };
+
 # Allow system server battery supply rw access
 allow system_server vendor_sysfs_battery_supply:file rw_file_perms;
 

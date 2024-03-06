@@ -14,6 +14,9 @@ on boot
     chown radio radio /dev/smd8
     mkdir /data/vendor/modem 0777 radio radio
 
+    # Disable doze brightness handling
+    write /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/doze_brightness -1
+
     # Touchscreen
     chown system system /sys/devices/platform/goodix_ts.0/goodix_ts_double_tap
     chmod 0660 /sys/devices/platform/goodix_ts.0/goodix_ts_double_tap

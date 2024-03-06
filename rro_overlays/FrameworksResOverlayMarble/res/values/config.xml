@@ -11,13 +11,13 @@
          timeout expires.  May be less than the minimum allowed brightness setting
          that can be set by the user. -->
     <integer name="config_screenBrightnessDim">15</integer>
-    <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.0015</item>
+    <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.000854597</item>
 
     <!-- Minimum screen brightness setting allowed by power manager.
          -2 is invalid so setting will resort to int value specified above.
          Set this to 0.0 to allow screen to go to minimal brightness.
          The user is forbidden from setting the brightness below this level. -->
-    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.0015</item>
+    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.000854597</item>
 
     <!-- Maximum screen brightness allowed by the power manager.
          -2 is invalid so setting will resort to int value specified above.
@@ -52,7 +52,7 @@
 
     <!-- The maximum range of gamma adjustment possible using the screen
          auto-brightness adjustment setting. -->
-    <fraction name="config_autoBrightnessAdjustmentMaxGamma">100%</fraction>
+    <fraction name="config_autoBrightnessAdjustmentMaxGamma">150%</fraction>
 
     <!-- The display uses different gamma curves for different refresh rates. It's hard for panel
          vendors to tune the curves to have exact same brightness for different refresh rate. So
@@ -550,7 +550,7 @@
     
     <!-- Specifies the maximum burn-in offset displacement from the center. If -1, no maximum value
          will be used. -->
-    <integer name="config_burnInProtectionMaxRadius">-1</integer>
+    <integer name="config_burnInProtectionMaxRadius">70</integer>
 
     <!-- Specifies the minimum burn-in offset horizontally. -->
     <integer name="config_burnInProtectionMinHorizontalOffset">-15</integer>
@@ -573,6 +573,9 @@
     <!-- Control whether the always on display mode is enabled by default. This value will be used
          during initialization when the setting is still null. -->
     <bool name="config_dozeAlwaysOnEnabled">false</bool>
+
+    <!-- Whether usage of the proximity sensor during doze is supported -->
+    <bool name="doze_proximity_sensor_supported">false</bool>
 
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">true</bool>
@@ -745,6 +748,8 @@
 
     <!-- True if the device supports Sustained Performance Mode. -->
     <bool name="config_sustainedPerformanceModeSupported">true</bool>
+    <!-- The default vibration strength, must be between 1 and 255 inclusive. -->
+    <integer name="config_defaultVibrationAmplitude">128</integer>
 
     <!-- Flag indicating whether we should enable the adaptive sleep.-->
     <bool name="config_adaptive_sleep_available">true</bool>

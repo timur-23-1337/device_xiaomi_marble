@@ -239,6 +239,16 @@ on boot
     #USB controller configuration
     setprop vendor.usb.controller a600000.dwc3
 
+    # perfservice access for venidng control
+    mkdir /dev/cpuset/vending
+    chown system system /dev/cpuset/vending
+    chown system system /dev/cpuset/vending/tasks
+    chown system system /dev/cpuset/vending/cgroup.procs
+    chmod 0664 /dev/cpuset/vending/cgroup.procs
+    chmod 0664 /dev/cpuset/vending/tasks
+    write /dev/cpuset/vending/mems 0
+    write /dev/cpuset/vending/cpus 0-7
+
     # game plaid mode
     chown system system  /sys/devices/virtual/gpu_plaid/plaid/game_data
 
@@ -285,7 +295,7 @@ on property:vendor.display.lcd_density=560
    setprop dalvik.vm.heapgrowthlimit 256m
 
 on property:vendor.display.lcd_density=640
-   setprop dalvik.vm.heapgrowthlimit 512m
+   setprop dalvik.vm.heapgrowthlimit 256m
 
 on init && property:ro.boot.mode=charger
     wait_for_prop vendor.all.modules.ready 1
@@ -378,6 +388,18 @@ service vendor.mdm_helper /vendor/bin/mdm_helper
     group system wakelock
     disabled
 
+on property:sys.boot_completed=1
+# Setup cpu.shares to throttle background groups (bg ~ 5% sysbg ~ 10%)
+    write /dev/cpuctl/background/cpu.shares 1024
+    write /dev/cpuctl/system-background/cpu.shares 2048
+    write /dev/cpuctl/system/cpu.shares 20480
+    # We only have system and background groups holding tasks and the groups below are empty
+    write /dev/cpuctl/camera-daemon/cpu.shares 20480
+    write /dev/cpuctl/foreground/cpu.shares 20480
+    write /dev/cpuctl/nnapi-hal/cpu.shares 20480
+    write /dev/cpuctl/rt/cpu.shares 20480
+    write /dev/cpuctl/top-app/cpu.shares 20480
+
 service vendor.mdm_launcher /vendor/bin/sh /vendor/bin/init.mdm.sh
     class core
     oneshot
@@ -417,6 +439,14 @@ service vendor.bt_wdsdaemon /system/vendor/bin/wdsdaemon -su
     group bluetooth diag system wakelock
     disabled
     oneshot
+
+#Enable WLAN SSR recovery
+on property:persist.vendor.ssr.restart_level=ALL_ENABLE
+    write /sys/kernel/cnss/recovery 1
+
+#Disable WLAN SSR recovery
+on property:persist.vendor.ssr.restart_level=ALL_DISABLE
+    write /sys/kernel/cnss/recovery 0
 
 #on property:sys.user.0.ce_available=true
 #    start vendor.tcpdump
@@ -475,6 +505,8 @@ on property:sys.boot_completed=1
     start  vendor.qvirtmgr
     # Enable ZRAM on boot_complete
     swapon_all /vendor/etc/fstab.qcom
+    # STOP EATING MY BATTERY AFTER 100H OF UPTIME FUCK YOU
+    stop statsd
 
 on post-fs-data
     chmod 0666 /dev/migt
@@ -601,3 +633,6 @@ on property:sys.volume.stream.music.device.bluetooth=*
 
 on property:sys.volume.stream.bluetoothsco=*
     setprop vendor.volume.stream.bluetoothsco ${sys.volume.stream.bluetoothsco}
+
+# Enable suspend to RAM
+    write /sys/power/mem_sleep "deep"

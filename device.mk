@@ -341,6 +341,27 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
 
+# Logging
+SPAMMY_LOG_TAGS := \
+    MiStcImpl \
+    SDM \
+    SDM-histogram \
+    SRE \
+    WifiHAL \
+    cnss-daemon \
+    libcitsensorservice@2.0-impl \
+    libsensor-displayalgo \
+    libsensor-parseRGB \
+    libsensor-ssccalapi \
+    sensors \
+    vendor.qti.hardware.display.composer-service \
+    vendor.xiaomi.sensor.citsensorservice@2.0-service
+
+ifneq ($(TARGET_BUILD_VARIANT),eng)
+PRODUCT_VENDOR_PROPERTIES += \
+    $(foreach tag,$(SPAMMY_LOG_TAGS),log.tag.$(tag)=E)
+endif
+
 # Media
 PRODUCT_PACKAGES += \
     android.hardware.media.omx@1.0 \
@@ -702,8 +723,6 @@ PRODUCT_PACKAGES += \
     libnl \
     libwfdaac_vendor
 
-PRODUCT_BOOT_JARS += \
-    WfdCommon
 # XiaomiParts
 PRODUCT_PACKAGES += \
     KeyHandler \

@@ -48,6 +48,9 @@ AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
 
 TARGET_USES_QCOM_MM_AUDIO := true
 
+# HWUI
+HWUI_COMPILE_FOR_PERF := true
+
 # Boot control
 SOONG_CONFIG_NAMESPACES += ufsbsg
 SOONG_CONFIG_ufsbsg += ufsframework
@@ -112,6 +115,13 @@ TARGET_RECOVERY_DEVICE_MODULES ?= init_xiaomi_marble
 
 # Kernel
 BOARD_KERNEL_PAGESIZE := 4096
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_RAMDISK_USE_LZ4 := true
+BOARD_USES_GENERIC_KERNEL_IMAGE := true
+
+BOARD_BOOT_HEADER_VERSION := 4
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+INLINE_KERNEL_BUILDING := true
 BOARD_KERNEL_BASE := 0x00000000
 
 BOARD_KERNEL_CMDLINE := \
@@ -119,7 +129,11 @@ BOARD_KERNEL_CMDLINE := \
     disable_dma32=on \
     kpti=off \
     swinfo.fingerprint=$(EVO_VERSION) \
-    mtdoops.fingerprint=$(EVO_VERSION)
+    mtdoops.fingerprint=$(EVO_VERSION) \
+    allow_file_spec_access \
+    irqaffinity=0-3 \
+    pelt=8 \
+    mitigations=off
 
 BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
@@ -127,16 +141,7 @@ BOARD_BOOTCONFIG := \
     androidboot.usbcontroller=a600000.dwc3 \
     androidboot.init_fatal_reboot_target=recovery
 
-BOARD_BOOT_HEADER_VERSION := 4
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-
 BOARD_KERNEL_IMAGE_NAME := Image
-
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_RAMDISK_USE_LZ4 := true
-BOARD_USES_GENERIC_KERNEL_IMAGE := true
-
-INLINE_KERNEL_BUILDING := true
 
 # Kill lineage kernel build task while preserving kernel
 TARGET_NO_KERNEL_OVERRIDE := true

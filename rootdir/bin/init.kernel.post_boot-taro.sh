@@ -103,11 +103,7 @@ echo "walt" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 echo 0 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
 echo 0 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
 echo 800000 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
-if [ $rev == "1.0" ]; then
-	echo 1190400 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-else
-	echo 1267200 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-fi
+echo 1190400 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
 echo 614400 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
 echo 1 > /sys/devices/system/cpu/cpufreq/policy0/walt/pl
 
@@ -116,22 +112,14 @@ echo "walt" > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
 echo 0 > /sys/devices/system/cpu/cpufreq/policy4/walt/down_rate_limit_us
 echo 0 > /sys/devices/system/cpu/cpufreq/policy4/walt/up_rate_limit_us
 echo 600000 > /sys/devices/system/cpu/cpufreq/policy4/walt/rtg_boost_freq
-if [ $rev == "1.0" ]; then
-	echo 1497600 > /sys/devices/system/cpu/cpufreq/policy4/walt/hispeed_freq
-else
-	echo 1555200 > /sys/devices/system/cpu/cpufreq/policy4/walt/hispeed_freq
-fi
+echo 1497600 > /sys/devices/system/cpu/cpufreq/policy4/walt/hispeed_freq
 echo 1 > /sys/devices/system/cpu/cpufreq/policy4/walt/pl
 
 # configure governor settings for gold+ cluster
 echo "walt" > /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
 echo 0 > /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us
 echo 0 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
-if [ $rev == "1.0" ]; then
-	echo 1536000 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
-else
-	echo 1728000 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
-fi
+echo 1536000 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
 echo 1 > /sys/devices/system/cpu/cpufreq/policy7/walt/pl
 
 # configure bus-dcvs
@@ -198,20 +186,16 @@ do
 	echo 50 > $qosgold/ipm_ceil
 done
 
-if [ "$rev" == "1.0" ]; then
-	echo Y > /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled
-	echo 1 > /sys/devices/system/cpu/cpu0/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu1/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu2/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu3/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu4/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu5/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu6/cpuidle/state1/disable
-	echo 1 > /sys/devices/system/cpu/cpu7/cpuidle/state1/disable
-	echo 0 > "/sys/devices/platform/hypervisor/hypervisor:qcom,gh-watchdog/wakeup_enable"
-else
-	echo N > /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled
-fi
+echo Y > /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled
+echo 1 > /sys/devices/system/cpu/cpu0/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu1/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu2/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu3/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu4/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu5/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu6/cpuidle/state1/disable
+echo 1 > /sys/devices/system/cpu/cpu7/cpuidle/state1/disable
+echo 0 > "/sys/devices/platform/hypervisor/hypervisor:qcom,gh-watchdog/wakeup_enable"
 
 echo s2idle > /sys/power/mem_sleep
 

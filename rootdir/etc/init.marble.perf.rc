@@ -98,22 +98,22 @@ on property:vendor.post_boot.parsed=1
     write /dev/cpuset/audio-app/cpus 0-3
 
     # Configure CPU input boost
-    # write /proc/sys/walt/input_boost/input_boost_freq "1324800 0 0 0 0 0 0 0"
-    # write /proc/sys/walt/input_boost/input_boost_ms 150
+    write /proc/sys/walt/input_boost/input_boost_freq "0 0 0 0 0 0 0 0"
+    write /proc/sys/walt/input_boost/input_boost_ms 0
 
     # Configure CPU governor ratelimits
-    write /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us 500
-    write /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us 5000
-    write /sys/devices/system/cpu/cpufreq/policy4/walt/up_rate_limit_us 500
-    write /sys/devices/system/cpu/cpufreq/policy4/walt/down_rate_limit_us 2500
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/up_rate_limit_us 1000
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/down_rate_limit_us 1000
     write /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us 500
     write /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us 500
 
     # Configure scheduler
-    write /proc/sys/kernel/sched_upmigrate "80 95"
-    write /proc/sys/kernel/sched_downmigrate "75 85"
-    write /proc/sys/kernel/sched_group_upmigrate 95
-    write /proc/sys/kernel/sched_group_downmigrate 80
+    write /proc/sys/walt/sched_upmigrate "80 95"
+    write /proc/sys/walt/sched_downmigrate "75 85"
+    write /proc/sys/walt/sched_group_upmigrate 95
+    write /proc/sys/walt/sched_group_downmigrate 80
 
     # Configure uclamp
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
@@ -163,5 +163,5 @@ service vendor.qti.hardware.display.allocator /vendor/bin/hw/vendor.qti.hardware
     task_profiles ProcessCapacityHigh HighPerformance
 
 on property:persist.sys.device_provisioned=1
-    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,6
-    setprop dalvik.vm.dex2oat-threads 6
+    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,6,7
+    setprop dalvik.vm.dex2oat-threads 8

@@ -31,12 +31,11 @@ renderthread.skia.reduceopstasksplitting=true
 hwui.disable_vsync=true
 persist.sys.ui.hw=1
 hwui.render_dirty_regions=false
+ro.min.fling_velocity=1000
+ro.max.fling_velocity=25000
 
 # FEAS
 ro.feas.enable=true
-
-# FUSE passthrough
-persist.sys.fuse.passthrough.enable=true
 
 # Hint Manager
 debug.hwui.use_hint_manager=true
@@ -85,6 +84,9 @@ persist.log.tag.OpenGLRenderer=S
 # LMK props
 ro.lmk.use_minfree_levels=true
 
+#NFC
+ro.nfc.port=I2C
+
 # Open the first-in-first-out interface thread
 sys.use_fifo_ui=1
 
@@ -111,9 +113,6 @@ persist.vendor.sensors.enable.mag_filter=true
 
 # SSR
 persist.vendor.ssr.enable_ramdumps=1
-
-# System prop for NFC DT
-ro.nfc.port=I2C
 
 # WiFi display
 persist.debug.wfd.enable=1
